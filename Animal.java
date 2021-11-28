@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 /**
  * A class representing shared characteristics of animals.
@@ -15,6 +16,10 @@ public abstract class Animal
     // The animal's position in the field.
     private Location location;
     
+    // The fox's age.
+    private int age;
+    
+    private static final Random rand = Randomizer.getRandom();
     /**
      * Create a new animal at location in field.
      * 
@@ -23,6 +28,7 @@ public abstract class Animal
      */
     public Animal(Field field, Location location)
     {
+        age = 0;
         alive = true;
         this.field = field;
         setLocation(location);
@@ -34,7 +40,20 @@ public abstract class Animal
      * @param newAnimals A list to receive newly born animals.
      */
     abstract public void act(List<Animal> newAnimals);
-
+    
+    protected int breed()
+    {
+        int births = 0;
+        if(canBreed() && rand.nextDouble() <= getBreedingProbability()) {
+            births = rand.nextInt(getMaxLitterSize()) + 1;
+        }
+        return births;
+    }
+    
+    abstract public double getBreedingProbability();
+    
+    abstract public int getMaxLitterSize();
+    
     /**
      * Check whether the animal is alive or not.
      * @return true if the animal is still alive.
@@ -88,4 +107,29 @@ public abstract class Animal
     {
         return field;
     }
+    
+     public int getAge()
+    {
+        return age;
+    }
+    
+    abstract public int getMaxAge();
+
+    protected void incrementAge()
+    {
+        age++;
+        if(age > getMaxAge()) {
+           setDead();
+        }
+    }
+    
+    public void setAge(int currentAge) {
+        age = currentAge;
+    }
+    
+     private boolean canBreed() {
+        return age >= getBreedingAge();
+    }
+    
+    abstract public int getBreedingAge();
 }
