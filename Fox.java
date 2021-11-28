@@ -41,11 +41,12 @@ public class Fox extends Animal
      */
     public Fox(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
+        super(randomAge, field, location);
+        foodLevel = RABBIT_FOOD_VALUE;
          
     }
     
-    /**
+     /**
      * This is what the fox does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
      * or die of old age.

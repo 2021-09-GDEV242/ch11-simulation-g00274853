@@ -36,7 +36,7 @@ public class Rabbit extends Animal
      */
     public Rabbit(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
+        super(randomAge, field, location);
          
     }
     
